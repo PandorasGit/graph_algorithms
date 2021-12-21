@@ -9,7 +9,6 @@ class DFS:
     def __init__(self, graph):
         self.graph = graph
 
-
     def dfs(self):
         # the time given by wall clock is shared by all
         # recursive calls
@@ -27,7 +26,6 @@ class DFS:
         for vertex in self.graph:
             if not vertex.visited:
                 visit(vertex)
-
 
     def topological_sort(self):
         """Sorts keys in graph in descending order by discovery time"""

@@ -13,6 +13,14 @@ class Vertex:
         self.visited = False
 
 
+class Edge:
+    """Edge connecting a vertex to another vertex"""
+
+    def __init__(self, vertex, weight=1):
+        self.next_vertex = vertex
+        self.weight = weight
+
+
 class TestClass(unittest.TestCase):
     """
     Class for testing Implementation
@@ -31,6 +39,12 @@ class TestClass(unittest.TestCase):
     def test_graph_creation_using_vertex(self):
         graph = self.create_graph()
         self.assertEqual(graph[0].edges, [("o", 1), ("s",), ("z", 1)])
+
+    def test_graph_with_edge(self):
+        start = Vertex("start")
+        a = Vertex("a")
+        start.edges.append(a)
+        self.assertEqual("a", start.edges[0].name)
 
     def test_graph_change_discovery_times(self):
         graph = self.create_graph()
