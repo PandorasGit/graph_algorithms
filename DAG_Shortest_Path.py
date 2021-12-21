@@ -2,6 +2,7 @@ import math
 import unittest
 from Vertex import Vertex
 from Vertex import Edge
+from collections import deque
 
 
 class DAGShortestPath:
@@ -24,6 +25,15 @@ class DAGShortestPath:
             if edge.next_vertex == child:
                 return edge.weight
         return None
+
+    def create_shortest_path_tree(self):
+        """Creates the shortest path tree"""
+        graph_queue = deque(self.graph)
+        for vertex in self.graph:
+            if vertex not in graph_queue:
+                graph_queue.popleft()
+                for edge in vertex.edges:
+                    self.relax(vertex, edge.next_vertex)
 
 
 class TestClass(unittest.TestCase):
@@ -63,6 +73,12 @@ class TestClass(unittest.TestCase):
         graph[1].distance = math.inf
         dag_object = DAGShortestPath(graph)
         self.assertEqual(3, dag_object.calculate_weight(graph[0], graph[1]))
+
+    def test_shortest_path(self):
+        """Problematic test"""
+        dag_object = DAGShortestPath(self.create_graph())
+        shortest_path_tree = "TBA"
+        self.assertEqual(shortest_path_tree, dag_object.create_shortest_path_tree())
 
 
 def main():
