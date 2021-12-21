@@ -45,25 +45,25 @@ class TestClass(unittest.TestCase):
         """Creates a directed graph for testing"""
         x = Vertex("x")
         z = Vertex("z")
-        w = Vertex("w", [Edge(z)])
-        v = Vertex("v", [Edge(w), Edge(x)])
+        w = Vertex("w", (Edge(z),))
+        v = Vertex("v", (Edge(w), Edge(x)))
         t = Vertex("t")
-        y = Vertex("y", [Edge(v)])
-        u = Vertex("u", [Edge(t)])
-        r = Vertex("r", [Edge(u), Edge(y)])
-        q = Vertex("q", [Edge(t)])
-        m = Vertex("m", [Edge(q), Edge(r), Edge(x)])
-        s = Vertex("s", [Edge(r)])
-        o = Vertex("o", [Edge(r), Edge(s), Edge(v)])
-        n = Vertex("n", [Edge(q), Edge(o)])
-        p = Vertex("p", [Edge(o), Edge(s), Edge(z)])
+        y = Vertex("y", (Edge(v),))
+        u = Vertex("u", (Edge(t),))
+        r = Vertex("r", (Edge(u), Edge(y)))
+        q = Vertex("q", (Edge(t),))
+        m = Vertex("m", (Edge(q), Edge(r), Edge(x)))
+        s = Vertex("s", (Edge(r),))
+        o = Vertex("o", (Edge(r), Edge(s), Edge(v)))
+        n = Vertex("n", (Edge(q), Edge(o)))
+        p = Vertex("p", (Edge(o), Edge(s), Edge(z)))
         return [m, q, t, r, u, y, v, w, z, x, n, o, s, p]
 
     def test_dfs_keys(self):
         dfs_object = DFS(self.create_graph())
         dfs_object.dfs()
         finish_time_of_m = dfs_object.graph[0].finishing_time
-        self.assertEqual(20,finish_time_of_m)
+        self.assertEqual(20, finish_time_of_m)
 
     def test_topological_sort(self):
         dfs_object = DFS(self.create_graph())

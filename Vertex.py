@@ -4,13 +4,14 @@ import unittest
 class Vertex:
     """Node in a graph"""
 
-    def __init__(self, name, edges=[]):
+    def __init__(self, name, edges=()):
         self.name = name
         self.edges = edges
         self.visited = None
         self.discovery_time = 0
         self.finishing_time = 0
         self.visited = False
+        self.distance = None
 
 
 class Edge:
@@ -41,9 +42,8 @@ class TestClass(unittest.TestCase):
         self.assertEqual(graph[0].edges, [("o", 1), ("s",), ("z", 1)])
 
     def test_graph_with_edge(self):
-        start = Vertex("start")
         a = Vertex("a")
-        start.edges.append(a)
+        start = Vertex("start", (a,))
         self.assertEqual("a", start.edges[0].name)
 
     def test_graph_change_discovery_times(self):
