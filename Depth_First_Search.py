@@ -58,6 +58,12 @@ class TestClass(unittest.TestCase):
         p = Vertex("p", [o, s, z])
         return [m, q, t, r, u, y, v, w, z, x, n, o, s, p]
 
+    def test_dfs_keys(self):
+        dfs_object = DFS(self.create_graph())
+        dfs_object.dfs()
+        finish_time_of_m = dfs_object.graph[0].finishing_time
+        self.assertEqual(20,finish_time_of_m)
+
     def test_topological_sort(self):
         dfs_object = DFS(self.create_graph())
         dfs_object.dfs()
