@@ -1,5 +1,6 @@
 import unittest
 from Vertex import Vertex
+from Vertex import Edge
 
 
 class DFS:
@@ -17,8 +18,8 @@ class DFS:
             node.discovery_time = self.time
             node.visited = True
             for v in node.edges:
-                if v.visited is False:
-                    visit(v)
+                if v.next_vertex.visited is False:
+                    visit(v.next_vertex)
             self.time += 1
             node.finishing_time = self.time
 
@@ -44,18 +45,18 @@ class TestClass(unittest.TestCase):
         """Creates a directed graph for testing"""
         x = Vertex("x")
         z = Vertex("z")
-        w = Vertex("w", [z])
-        v = Vertex("v", [w, x])
+        w = Vertex("w", [Edge(z)])
+        v = Vertex("v", [Edge(w), Edge(x)])
         t = Vertex("t")
-        y = Vertex("y", [v])
-        u = Vertex("u", [t])
-        r = Vertex("r", [u, y])
-        q = Vertex("q", [t])
-        m = Vertex("m", [q, r, x])
-        s = Vertex("s", [r])
-        o = Vertex("o", [r, s, v])
-        n = Vertex("n", [q, o])
-        p = Vertex("p", [o, s, z])
+        y = Vertex("y", [Edge(v)])
+        u = Vertex("u", [Edge(t)])
+        r = Vertex("r", [Edge(u), Edge(y)])
+        q = Vertex("q", [Edge(t)])
+        m = Vertex("m", [Edge(q), Edge(r), Edge(x)])
+        s = Vertex("s", [Edge(r)])
+        o = Vertex("o", [Edge(r), Edge(s), Edge(v)])
+        n = Vertex("n", [Edge(q), Edge(o)])
+        p = Vertex("p", [Edge(o), Edge(s), Edge(z)])
         return [m, q, t, r, u, y, v, w, z, x, n, o, s, p]
 
     def test_dfs_keys(self):
