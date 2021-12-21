@@ -30,7 +30,7 @@ class DFS:
 
     def topological_sort(self):
         """Sorts keys in graph in descending order by discovery time"""
-
+        self.dfs()
         self.graph.sort(key=lambda vertex: vertex.finishing_time, reverse=True)
         return self.graph
 

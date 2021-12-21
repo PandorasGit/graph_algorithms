@@ -12,6 +12,7 @@ class Vertex:
         self.finishing_time = 0
         self.visited = False
         self.distance = None
+        self.parent = None
 
 
 class Edge:
@@ -30,16 +31,25 @@ class TestClass(unittest.TestCase):
     @staticmethod
     def create_graph():
         """Creates a directed graph for testing"""
-        return [Vertex("p", [("o", 1), ("s",), ("z", 1)]), Vertex("n", [("o",), ("u", 1), ("q", 1)]),
-                Vertex("o", [("r", 1), ("s", 1)]), Vertex("s", [("r", 1)]),
-                Vertex("m", [("q", 1), ("r", 1), ("x", 1)]), Vertex("r", [("u", 1), ("y", 1)]),
-                Vertex("y", [("v", 1)]), Vertex("v", [("x", 1), ("w", 1)]),
-                Vertex("w", [("z", 1)]), Vertex("z"), Vertex("u", [("t", 1)]),
-                Vertex("q", [("t", 1)]), Vertex("t")]
+        x = Vertex("x")
+        z = Vertex("z")
+        w = Vertex("w", (Edge(z),))
+        v = Vertex("v", (Edge(w), Edge(x)))
+        t = Vertex("t")
+        y = Vertex("y", (Edge(v),))
+        u = Vertex("u", (Edge(t),))
+        r = Vertex("r", (Edge(u), Edge(y)))
+        q = Vertex("q", (Edge(t),))
+        m = Vertex("m", (Edge(q), Edge(r), Edge(x)))
+        s = Vertex("s", (Edge(r),))
+        o = Vertex("o", (Edge(r), Edge(s), Edge(v)))
+        n = Vertex("n", (Edge(q), Edge(o)))
+        p = Vertex("p", (Edge(o), Edge(s), Edge(z)))
+        return [m, q, t, r, u, y, v, w, z, x, n, o, s, p]
 
     def test_graph_creation_using_vertex(self):
         graph = self.create_graph()
-        self.assertEqual(graph[0].edges, [("o", 1), ("s",), ("z", 1)])
+        self.assertEqual(graph[0].edges[0].next_vertex, (graph[1]))
 
     def test_graph_with_edge(self):
         a = Vertex("a")
