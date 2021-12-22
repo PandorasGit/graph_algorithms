@@ -13,6 +13,7 @@ class Vertex:
         self.visited = False
         self.distance = None
         self.parent = None
+        self.path = []
 
 
 class Edge:

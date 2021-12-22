@@ -21,7 +21,8 @@ class DAGShortestPath:
             child.distance = source.distance + self.calculate_weight(source, child)
             child.parent = source
 
-    def calculate_weight(self, source, child):
+    @staticmethod
+    def calculate_weight(source, child):
         """Calculates the weight of the edge between two vertices"""
         for edge in source.edges:
             if edge.next_vertex == child:
@@ -37,6 +38,24 @@ class DAGShortestPath:
                 graph_queue.popleft()
                 for edge in vertex.edges:
                     self.relax(vertex, edge.next_vertex)
+
+    def create_shortest_path_tree(self):
+        """Create tree for whole graph"""
+        def walk_path(vertex):
+            """Create Shortest Path Array"""
+            if vertex.parent is None:
+                if not vertex.path:
+                    vertex.path.append(vertex)
+                return
+            walk_path(vertex.parent)
+            for node in vertex.parent.path:
+                if node not in vertex.path:
+                    vertex.path.append(node)
+            vertex.path.append(vertex)
+
+        for each in self.graph:
+            walk_path(each)
+
 
 
 class TestClass(unittest.TestCase):
@@ -76,6 +95,16 @@ class TestClass(unittest.TestCase):
         dag_object = DAGShortestPath(self.create_graph())
         dag_object.walk_shortest_path()
         self.assertEqual(3, dag_object.graph[6].distance)
+
+    def test_shortest_path_for_paths(self):
+        """Failing test, unsure how to create path"""
+        dag_object = DAGShortestPath(self.create_graph())
+        dag_object.walk_shortest_path()
+        dag_object.create_shortest_path_tree()
+        actual_name_array = []
+        for vertex in dag_object.graph[6].path:
+            actual_name_array.append(vertex.name)
+        self.assertEqual(["q","x","z"], actual_name_array)
 
 
 def main():
